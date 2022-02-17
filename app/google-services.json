@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "656363789299",
+    "project_id": "amu1-3a535",
+    "storage_bucket": "amu1-3a535.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656363789299:android:cb588ee32041f5409f5086",
+        "android_client_info": {
+          "package_name": "com.example.amu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656363789299-9vmgg15pda81hp4900na951jviab0uss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_3UhOZFTbe_wv2diZh5A3yF1x6rR4GuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656363789299-9vmgg15pda81hp4900na951jviab0uss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
