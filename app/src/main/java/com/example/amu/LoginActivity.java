@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         // Configure Google Sign In
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.def ault_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -80,11 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         NotHaveAccountTv= findViewById(R.id.NotHave_accountTv);
         mRecoverPasswordTv=findViewById(R.id.RecoverPasswordTv);
         mGoogleLoginBtn=findViewById(R.id.googleLoginBtn);
-
-
-
-
-
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,22 +209,25 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             pd.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String email=user.getEmail();
-                            String uid=user.getUid();
-                            //store info in real time data base
-                            //Using hash Map
-                            HashMap<Object, String> hashMap= new HashMap<>();
-                            //put info in hashMap
-                            hashMap.put("Email", email);
-                            hashMap.put("uid", uid);
-                            hashMap.put("Name", " ");
-                            hashMap.put("Phone"," ");
-                            hashMap.put("Image"," ");
-                            FirebaseDatabase database= FirebaseDatabase.getInstance();
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                                String email=user.getEmail();
+                                String uid=user.getUid();
+                                //store info in real time data base
+                                //Using hash Map
+                                HashMap<Object, String> hashMap= new HashMap<>();
+                                //put info in hashMap
+                                hashMap.put("Email", email);
+                                hashMap.put("uid", uid);
+                                hashMap.put("Name", " ");
+                                hashMap.put("Phone"," ");
+                                hashMap.put("Image"," ");
+                                FirebaseDatabase database= FirebaseDatabase.getInstance();
 
-                            DatabaseReference reference= database.getReference("Users");
-                            //put data within hashed map
-                            reference.child(uid).setValue(hashMap);
+                                DatabaseReference reference= database.getReference("Users");
+                                //put data within hashed map
+                                reference.child(uid).setValue(hashMap);
+
+                            }
 
 
                             // Sign in success, update UI with the signed-in user's information

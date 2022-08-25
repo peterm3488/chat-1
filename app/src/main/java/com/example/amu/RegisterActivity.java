@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Initialize Firebase Auth
 
 
-        mAuth = FirebaseAuth.getInstance();
+         mAuth = FirebaseAuth.getInstance();
 
         progressDialog= new ProgressDialog(this);
         progressDialog.setMessage("Registering User...");
@@ -113,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("Name", " ");
                             hashMap.put("Phone"," ");
                             hashMap.put("Image"," ");
+                            hashMap.put("Cover"," ");
                             FirebaseDatabase database= FirebaseDatabase.getInstance();
 
                             DatabaseReference reference= database.getReference("Users");

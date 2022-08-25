@@ -9,10 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -31,17 +29,17 @@ public class DashboardActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         BottomNavigationView navigationView= findViewById(R.id.navigation);
-        navigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) selectedListener);
+        navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
         actionBar.setTitle("Home");
         HomeFragment fragment_home= new HomeFragment();
         FragmentTransaction ft1=getSupportFragmentManager().beginTransaction();
-        ft1.replace(R.id.navigation,fragment_home, " ");
+        ft1.replace(R.id.content,fragment_home, " ");
         ft1.commit();
 
 
     }
-   private NavigationBarView.OnItemSelectedListener selectedListener =
+    private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener()
    {
 
@@ -54,7 +52,7 @@ public class DashboardActivity extends AppCompatActivity {
                             actionBar.setTitle("Home");
                             HomeFragment fragment_home= new HomeFragment();
                             FragmentTransaction ft1=getSupportFragmentManager().beginTransaction();
-                            ft1.replace(R.id.navigation,fragment_home,"");
+                            ft1.replace(R.id.content,fragment_home,"");
                             ft1.commit();
                             return true;
 
@@ -63,7 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
                             actionBar.setTitle("Profile");
                             ProfileFragment fragment2= new ProfileFragment();
                             FragmentTransaction ft2=getSupportFragmentManager().beginTransaction();
-                            ft2.replace(R.id.navigation,fragment2, " ");
+                            ft2.replace(R.id.content,fragment2, " ");
                             ft2.commit();
                             return true;
 
@@ -73,7 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
                             actionBar.setTitle("Users");
                             UsersFragment fragment3= new UsersFragment();
                             FragmentTransaction ft3=getSupportFragmentManager().beginTransaction();
-                            ft3.replace(R.id.navigation,fragment3, " ");
+                            ft3.replace(R.id.content,fragment3, " ");
                             ft3.commit();
                             return true;
                     }
