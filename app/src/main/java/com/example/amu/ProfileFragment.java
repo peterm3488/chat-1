@@ -54,14 +54,19 @@ import java.util.HashMap;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    //firebase
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+    //storage
     StorageReference storageReference;
+    //path where images of user profile and cover will be stored
     String storagePath="users_Profile_Cover_Images/";
 
+    //views from xml
     TextView nameTv, emailTv,phoneTv;
     ImageView avatarIv,coverIv;
 
@@ -71,12 +76,14 @@ public class ProfileFragment extends Fragment {
 //permission constant
     private static final int CAMERA_REQUEST_CODE=100;
     private static final int STORAGE_REQUEST_CODE=200;
-    private static final int IMAGE_PICK_CAMERA_CODE=300;
-    private static final int IMAGE_PICK_GALLERY_CODE=400;
+    private static final int IMAGE_PICK_CAMERA_CODE=300;//400
+    private static final int IMAGE_PICK_GALLERY_CODE=400;//300
     //array of permission requested
     String[] cameraPermissions;
     String[] storagePermissions;
+    //uri of picked image
     Uri image_uri;
+    //for checking profile or cover photo
     String profileOrCoverPhoto;
 
 
@@ -126,6 +133,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
+
+        //init firebase
         firebaseAuth=FirebaseAuth.getInstance();
         user= firebaseAuth.getCurrentUser();
         
@@ -135,10 +144,11 @@ public class ProfileFragment extends Fragment {
         storageReference= getInstance().getReference();
 
 
-
+        //init Array of permissions
         cameraPermissions= new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        //init views
         avatarIv =view.findViewById(R.id.avatarIv);
         nameTv=view.findViewById(R.id.nameTv);
         emailTv=view.findViewById(R.id.emailTv);
@@ -152,8 +162,11 @@ public class ProfileFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+              //check until required data get
                for (DataSnapshot ds:dataSnapshot.getChildren()){
 
+                   //get data
                    String name=" "+ ds.child("Name").getValue();
                    String email=" "+ ds.child("Email").getValue();
                    String phone=" "+ ds.child("Phone").getValue();
@@ -167,10 +180,12 @@ public class ProfileFragment extends Fragment {
                    phoneTv.setText(phone);
 
                    try {
+                       //if image is received then set
                        Picasso.with(getContext()).load(image).into(avatarIv);
 
                    }
                    catch (Exception e){
+                       //if there is any exception while getting image then set default
                        Picasso.with(getContext()).load(R.drawable.ic_default_img_white).into(avatarIv);
 
                    }
@@ -204,6 +219,9 @@ public class ProfileFragment extends Fragment {
         return view;
     }
     private boolean CheckStoragePermission(){
+        //check if storage permission is enabled or not
+        //return true if enabled
+        //return false if not enabled
         boolean result = ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ==(PackageManager.PERMISSION_GRANTED);
         return result;
@@ -225,12 +243,16 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showEditProfileDialog() {
+        //Edit Profile Picture, Edit cover Photo,Edit Name,Edit Phone
         String options[]={"Edit Profile Photo"," Edit Cover Photo","Edit Name ","Edit Phone "};
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
+        //set title
         builder.setTitle("Choose Action");
+        //set items to dialog
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
+                //handle dialog item clicks
 
                 if (which==0){
                     pd.setMessage("Updating Profile Photo");
@@ -238,20 +260,20 @@ public class ProfileFragment extends Fragment {
                     showImagePicDialogue();
 
                 }
-                //edit profile photo
+                //edit profile click
                 else if (which==1){
                     pd.setMessage("Updating Cover Photo");
                     profileOrCoverPhoto="Cover";
                     showImagePicDialogue();
 
                 }
-                //edit cover photo
+                //edit cover click
                 else if (which==2){
                     pd.setMessage("Updating Name");
                     showNamePhoneUpdateDialogue("Name");
 
                 }
-                //edit name
+                //edit name click
                 else if (which==3){
                     pd.setMessage("Updating Phone");
                     showNamePhoneUpdateDialogue("Phone");
@@ -260,6 +282,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+        //create and show dialog
         builder.create().show();
     }
 
@@ -338,7 +361,7 @@ public class ProfileFragment extends Fragment {
                             pickFromCamera();
                         }
                     }
-                    //edit profile photo
+
                     else if (which==1){
                        //Gallery clicked
                         if (!CheckStoragePermission()){
@@ -352,22 +375,28 @@ public class ProfileFragment extends Fragment {
 
                 }
             });
+            //create and show dialog
             builder.create().show();
         }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
+       /*This method called when user press allow or deny from permission request dialog
+        we handle permission case(allowed & denie)*/
+
         switch (requestCode){
             case CAMERA_REQUEST_CODE:{
                 if (grantResults.length>0){
                     boolean cameraAccepted=grantResults[0]==PackageManager.PERMISSION_GRANTED;
                     boolean writeStorageAccepted=grantResults[1]==PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted&&writeStorageAccepted){
+                    if (cameraAccepted && writeStorageAccepted){
+                        //permission enabled
                         
                         pickFromCamera();
                     }
                     else {
+                        //permission denied
                         Toast.makeText(getActivity(), "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -378,10 +407,11 @@ public class ProfileFragment extends Fragment {
                 if (grantResults.length>0){
                     boolean writeStorageAccepted=grantResults[1]==PackageManager.PERMISSION_GRANTED;
                     if (writeStorageAccepted){
-
+                        //permission enabled
                         pickFromGallery();
                     }
                     else {
+                        //permission denied
                         Toast.makeText(getActivity(), "Please enable storage permission", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -394,15 +424,18 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //This method is called after picking image from camera or gallery
         if (resultCode==RESULT_OK);
         if (requestCode==IMAGE_PICK_GALLERY_CODE)
         {
+            //image is picked from gallery, get uri of image
             if (requestCode==IMAGE_PICK_GALLERY_CODE);{
                 image_uri =data.getData();
                 uploadProfileCoverPhoto(image_uri);
 
         }
-        if (requestCode==IMAGE_PICK_GALLERY_CODE){
+        if (requestCode==IMAGE_PICK_CAMERA_CODE){
+            //image picked from camera,get uri image
             uploadProfileCoverPhoto(image_uri);
 
         }
@@ -411,26 +444,38 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadProfileCoverPhoto(Uri uri) {
+        //show progress
         pd.show();
+        /*Instead of creating separate function for profile pic and cover photo
+        * all work done here for all the functions
+        * To add check ill add a string variable and assign it value"image"* when user clicks
+        * Edit profile pic and assign it value"cover" when user clicks"Edit Cover Photo"
+        * Here: image is the key in each user containing url of user's profile picture
+        *        cover is the key in each user containing url of user's cover photo*/
+
+        //path and name of image to be stored in firebase storage
         String filePathAndName=storagePath+""+profileOrCoverPhoto+""+ user.getUid();
         StorageReference storageReference2nd=storageReference.child(filePathAndName);
         storageReference2nd.putFile(uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //image is uploaded to storage, now get it's url and store in user's database
                         Task <Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
                         while (!uriTask.isSuccessful());
                         Uri downloadUri=uriTask.getResult();
-                        //check if image is uploaded
+                        //check if image is uploaded or not and url is received
                         if (uriTask.isSuccessful()){
                             //image uploaded
-                            //update url in user's
+                            //update url in user's database
                             HashMap<String,Object>results=new HashMap<>();
                             results.put(profileOrCoverPhoto,downloadUri.toString());
                             databaseReference.child(user.getUid()).updateChildren(results)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void avoid) {
+                                            //url in database of user is added successfully
+                                            //dismiss progressive bar
                                             pd.dismiss();
                                             Toast.makeText(getActivity(), "Image Updated...", Toast.LENGTH_SHORT).show();
 
@@ -439,6 +484,8 @@ public class ProfileFragment extends Fragment {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
+                                            //error adding url in database of user
+                                            //dismiss progressive bar
                                             pd.dismiss();
                                             Toast.makeText(getActivity(), "Error Updating Image...", Toast.LENGTH_SHORT).show();
 
@@ -457,6 +504,7 @@ public class ProfileFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        //there were some error(s),get and show error message, dismiss progress dialog
                         pd.dismiss();
                         Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -475,7 +523,9 @@ public class ProfileFragment extends Fragment {
         ContentValues values= new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"Temp pic");
         values.put(MediaStore.Images.Media.DESCRIPTION,"Temp Description");
+       // put image uri
         image_uri=getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        //intent to start camera
         Intent cameraIntent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);
         startActivityForResult(cameraIntent,IMAGE_PICK_CAMERA_CODE);

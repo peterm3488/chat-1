@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "656363789299",
+    "firebase_url": "https://amu1-3a535-default-rtdb.firebaseio.com",
     "project_id": "amu1-3a535",
     "storage_bucket": "amu1-3a535.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "656363789299-macjseq2u0esudr8rohbn6aug965nl2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.amu",
+            "certificate_hash": "436d8a738969cbdde77d348b9ad39579353a7e69"
+          }
+        },
         {
           "client_id": "656363789299-9vmgg15pda81hp4900na951jviab0uss.apps.googleusercontent.com",
           "client_type": 3
