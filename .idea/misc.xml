@@ -23,11 +23,16 @@
         <entry key="..\:/Users/HP ELITE/AndroidStudioProjects/Amu/app/src/main/res/menu/menu_nav.xml" value="0.1640625" />
         <entry key="..\:/Users/HP ELITE/AndroidStudioProjects/Amu/app/src/main/res/menu/menu_navlower.xml" value="0.1796875" />
         <entry key="..\:/Users/HP ELITE/AndroidStudioProjects/Amu/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/drawable-hdpi/backgroundcut.xml" value="0.1435" />
+        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/drawable-hdpi/ic_baseline_account_circle_24.xml" value="0.1435" />
+        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/drawable-hdpi/ic_baseline_admin_panel_settings_24.xml" value="0.1435" />
+        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/drawable-hdpi/ic_baseline_check_circle_24.xml" value="0.1435" />
+        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/drawable-hdpi/ic_baseline_home_24.xml" value="0.1435" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/activity_dashboard.xml" value="0.14743589743589744" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/activity_register.xml" value="0.1" />
-        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/fragment_home.xml" value="0.14743589743589744" />
+        <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/fragment_profile.xml" value="0.14743589743589744" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/fragment_users.xml" value="0.14743589743589744" />
         <entry key="..\:/android/AndroidStudioProjects/Amu/app/src/main/res/layout/row_users.xml" value="0.14743589743589744" />
